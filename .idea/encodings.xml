@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/note-account/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/note-account/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/note-auth/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/note-auth/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/note-codegen/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/note-codegen/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/note-comment/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/note-comment/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/note-common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/note-common/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/note-gateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/note-gateway/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+  </component>
+</project>
