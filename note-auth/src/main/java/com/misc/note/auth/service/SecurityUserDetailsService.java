@@ -24,6 +24,9 @@ public class SecurityUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
             ResultVO<AccountVO> resultVO = accountFeignClient.getAccountByContact(username);
             AccountVO account = resultVO.getData();
+            if (account == null){
+                throw new UsernameNotFoundException(username);
+            }
             String contact = Strings.isNullOrEmpty(account.getPhoneNumber())
                                 ? account.getEmail():account.getPhoneNumber();
             return new SecurityAccountDetails(account.getId(), contact, account.getPassword(),

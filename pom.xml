@@ -33,6 +33,7 @@
     <jwt.version>4.4.0</jwt.version>
     <fastJson.verion>2.0.22</fastJson.verion>
     <redission.version>3.37.0</redission.version>
+    <minio.version>8.5.12</minio.version>
 
     <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
   </properties>

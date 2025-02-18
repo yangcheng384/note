@@ -4,6 +4,7 @@ import com.misc.note.account.entity.AccountRequest;
 import com.misc.note.common.domain.AccountVO;
 import com.mybatisflex.core.service.IService;
 import com.misc.note.account.entity.Account;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 账户表 服务层。
@@ -16,4 +17,6 @@ public interface AccountService extends IService<Account> {
     void register(AccountRequest accountRequest);
 
     AccountVO getAccountByContact(String contact);
+
+    String uploadFile(MultipartFile file);
 }

@@ -5,19 +5,28 @@ import com.misc.note.account.entity.AccountRequest;
 import com.misc.note.common.constant.AccountConstant;
 import com.misc.note.common.domain.AccountVO;
 import com.misc.note.common.exception.BizException;
+import com.misc.note.common.provider.UploadProvider;
 import com.misc.note.common.resp.ResultEnum;
 import com.misc.note.common.util.CommonUtil;
+import com.misc.note.common.util.UploadUtil;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
 import com.misc.note.account.entity.Account;
 import com.misc.note.account.mapper.AccountMapper;
 import com.misc.note.account.service.AccountService;
+import io.minio.MinioClient;
+import io.minio.PutObjectArgs;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.time.LocalDateTime;
 
 import static com.misc.note.account.entity.table.AccountTableDef.ACCOUNT;
@@ -31,6 +40,12 @@ import static com.misc.note.account.entity.table.AccountTableDef.ACCOUNT;
 @Slf4j
 @Service
 public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account>  implements AccountService{
+
+    @Resource
+    private UploadProvider uploadProvider;
+
+    @Value("${minio.bucket-name}")
+    private String bucketName;
 
     @Override
     public void register(AccountRequest accountRequest) {
@@ -110,5 +125,33 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account>  imp
         BeanUtils.copyProperties(account, accountVO);
         log.info("查询到账户信息：{}", accountVO);
         return accountVO;
+    }
+
+    @Override
+    public String uploadFile(MultipartFile file) {
+        if (file.isEmpty()){
+            log.error("上传的头像不存在！");
+            throw new BizException(ResultEnum.FILE_EMPTY);
+        }
+        String originalFilename = file.getOriginalFilename();
+        String fileName = originalFilename;
+        if (!Strings.isNullOrEmpty(originalFilename)) {
+            String suffix = originalFilename.substring(originalFilename.lastIndexOf("."));
+            fileName = System.nanoTime() + suffix;
+        }
+        File targetFile = new File(fileName);
+        try {
+            UploadUtil.makeBucket(bucketName);
+            MinioClient minioClient = uploadProvider.getMinioClient();
+            minioClient.putObject(PutObjectArgs.builder()
+                    .bucket(bucketName)
+                    .object(AccountConstant.FILE_UPLOAD_TARGET_PATH + fileName)
+                    .contentType(file.getContentType())
+                    .stream(file.getInputStream(), file.getInputStream().available(), -1).build());
+            log.info("上传头像【{}】成功！", fileName);
+        } catch (Exception e){
+            log.error("上传头像异常, {}", e.getMessage());
+        }
+        return targetFile.getPath();
     }
 }

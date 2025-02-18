@@ -23,6 +23,7 @@ public enum ResultEnum {
     PHONE_OR_EMAIL_ERROR(10009, "手机号或邮箱输入不正确!"),
     TOKEN_EMPTY(10010, "token不存在！"),
     TOKEN_INVALID(10011, "非法的token"),
+    FILE_EMPTY(10012, "文件不存在！")
     ;
 
     private final int code;

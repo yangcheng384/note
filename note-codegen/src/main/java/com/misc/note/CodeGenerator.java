@@ -6,7 +6,7 @@ import com.mybatisflex.codegen.config.GlobalConfig;
 
 public class CodeGenerator {
 
-    private static final String url = "jdbc:mysql://43.139.66.63:3306/note?useUnicode=true&characterEncoding=utf-8";
+    private static final String url = "jdbc:mysql://127.0.0.1:3306/note?useUnicode=true&characterEncoding=utf-8";
 
     private static final String user = "root";
 

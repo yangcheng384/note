@@ -17,4 +17,6 @@ public class AccountConstant {
     public static final String ACCOUNT_STATUS_NORMAL = "0";
 
     public static final String ACCOUNT_STATUS_DISABLED = "1";
+
+    public static final String FILE_UPLOAD_TARGET_PATH = "/upload/files/";
 }
