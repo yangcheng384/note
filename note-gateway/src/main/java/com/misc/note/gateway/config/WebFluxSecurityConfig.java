@@ -3,13 +3,18 @@ package com.misc.note.gateway.config;
 import com.google.common.collect.Lists;
 import com.misc.note.gateway.components.*;
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
-import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
+@Slf4j
 @EnableWebFluxSecurity
 @Configuration
 public class WebFluxSecurityConfig {
@@ -31,9 +36,16 @@ public class WebFluxSecurityConfig {
 
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
+        List<String> ignoreUrlList = Optional.ofNullable(ignoreUrls)
+                .map(IgnoreUrls::getUrls)
+                .orElse(Collections.emptyList());
+
+        if (ignoreUrlList.isEmpty()) {
+            log.warn("ignoreUrls is not configured or is empty.");
+        }
         http
             .authorizeExchange(exchange ->
-                    exchange.pathMatchers(Lists.newArrayList(ignoreUrls.getUrls()).toArray(String[]::new)).permitAll()
+                    exchange.pathMatchers(Lists.newArrayList(ignoreUrlList).toArray(String[]::new)).permitAll()
                             .anyExchange().authenticated())
 //                            .access(authorizationManager))
                 .securityContextRepository(jwtSecurityContextRepository)

@@ -17,18 +17,16 @@ public class AccountRequest {
     private String nickName;
 
     /**
+     * 验证码
+     */
+    private String verifyCode;
+
+    /**
      * 手机号
      */
     @Pattern(regexp = "^1[3-9]\\d{9}$")
     @Error(resultEnum = ResultEnum.PHONE_NUMBER_ERROR)
     private String phoneNumber;
-
-    /**
-     * 邮箱
-     */
-    @Email
-    @Error(resultEnum = ResultEnum.EMAIL_ERROR)
-    private String email;
 
     /**
      * 登录密码

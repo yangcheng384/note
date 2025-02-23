@@ -17,8 +17,8 @@ public class AccountFeignFallbackFactory implements FallbackFactory<AccountFeign
         return new AccountFeignClient() {
 
             @Override
-            public ResultVO<AccountVO> getAccountByContact(String contact) {
-                log.error("调用/account/getAccountByContact接口异常!", cause);
+            public ResultVO<AccountVO> getAccountByPhoneNumber(String phoneNumber) {
+                log.error("调用/account/getAccountByPhoneNumber异常!", cause);
                 return ResultUtil.failure();
             }
         };

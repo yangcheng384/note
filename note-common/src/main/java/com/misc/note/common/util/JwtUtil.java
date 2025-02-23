@@ -5,8 +5,6 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.misc.note.common.constant.JwtConstant;
-import com.misc.note.common.resp.ResultUtil;
-import com.misc.note.common.resp.ResultVO;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;

@@ -10,7 +10,7 @@ import com.misc.note.account.entity.Account;
 import com.misc.note.account.service.AccountService;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * 账户表 控制层。
@@ -24,6 +24,15 @@ public class AccountController {
 
     @Resource
     private AccountService accountService;
+
+    /**
+     * 生成验证码
+     * @param contact 手机号/邮箱
+     */
+    @GetMapping("/generateCode/{contact}")
+    public void generateCode(@PathVariable String contact){
+        accountService.generateCode(contact);
+    }
 
     /**
      * 添加账户表。
@@ -83,9 +92,9 @@ public class AccountController {
         return accountService.getById(id);
     }
 
-    @GetMapping("/getAccountByContact/{contact}")
-    public AccountVO getAccountByContact(@PathVariable("contact") String contact){
-        return accountService.getAccountByContact(contact);
+    @GetMapping("/getAccountByPhoneNumber/{phoneNumber}")
+    public AccountVO getAccountByPhoneNumber(@PathVariable("phoneNumber") String phoneNumber){
+        return accountService.getAccountByContact(phoneNumber);
     }
 
     /**

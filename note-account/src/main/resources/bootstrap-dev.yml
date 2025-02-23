@@ -1,22 +1,19 @@
 spring:
-  application:
-    name: account
+  config:
+    import: optional:nacos.yml
   cloud:
     nacos:
-      server-addr: 127.0.0.1:8848
-      discovery:
-        server-addr: ${spring.cloud.nacos.server-addr}
-        namespace: note
-        group: DEFAULT_GROUP
       config:
-        server-addr: ${spring.cloud.nacos.server-addr}
-        namespace: note
-        group: DEFAULT_GROUP
-        file-extension: yml
         shared-configs:
           - dataId: datasource.yml
             group: DEFAULT_GROUP
             refresh: true
           - dataId: minio.yml
+            group: DEFAULT_GROUP
+            refresh: true
+          - dataId: redis.yml
+            group: DEFAULT_GROUP
+            refresh: true
+          - dataId: sms.yml
             group: DEFAULT_GROUP
             refresh: true

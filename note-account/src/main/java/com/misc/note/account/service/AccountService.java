@@ -14,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface AccountService extends IService<Account> {
 
+    void generateCode(String contact);
+
     void register(AccountRequest accountRequest);
 
     AccountVO getAccountByContact(String contact);

@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
-import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -19,11 +18,13 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.security.web.server.context.ServerSecurityContextRepository;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Slf4j
 @Component
@@ -44,9 +45,12 @@ public class JwtSecurityContextRepository implements ServerSecurityContextReposi
         response.getHeaders().add(HttpHeaders.CONTENT_TYPE, "application/json; charset=utf-8");
         log.info("请求地址:{}", request.getURI());
         List<String> ignores = ignoreUrls.getUrls();
-        if (ignores.contains(request.getURI().getPath())) {
-            log.info("白名单路径，放行！");
-            return Mono.empty();
+        AntPathMatcher pathMatcher = new AntPathMatcher();
+        for (String ignore : ignores) {
+            if (pathMatcher.match(ignore, request.getURI().getPath())) {
+                log.info("白名单路径，放行！");
+                return Mono.empty();
+            }
         }
         String token = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         if (Strings.isNullOrEmpty(token)){

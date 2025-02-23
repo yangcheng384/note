@@ -14,7 +14,8 @@
     <module>note-common</module>
     <module>note-gateway</module>
     <module>note-codegen</module>
-      <module>note-auth</module>
+    <module>note-auth</module>
+    <module>note-common-dependencies</module>
   </modules>
 
   <properties>
@@ -34,6 +35,8 @@
     <fastJson.verion>2.0.22</fastJson.verion>
     <redission.version>3.37.0</redission.version>
     <minio.version>8.5.12</minio.version>
+    <servlet-api.version>3.1.0</servlet-api.version>
+    <aliyun.sms.version>3.1.1</aliyun.sms.version>
 
     <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
   </properties>

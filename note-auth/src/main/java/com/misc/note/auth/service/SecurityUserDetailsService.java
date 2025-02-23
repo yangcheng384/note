@@ -22,7 +22,7 @@ public class SecurityUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
-            ResultVO<AccountVO> resultVO = accountFeignClient.getAccountByContact(username);
+            ResultVO<AccountVO> resultVO = accountFeignClient.getAccountByPhoneNumber(username);
             AccountVO account = resultVO.getData();
             if (account == null){
                 throw new UsernameNotFoundException(username);
